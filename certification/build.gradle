@@ -1,0 +1,25 @@
+plugins {
+    id 'java'
+}
+
+apply plugin: 'java'
+apply plugin: 'io.spring.dependency-management'
+
+group 'org.tyytogether.auth'
+version '1.0.0-SNAPSHOT'
+
+sourceCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+    compileOnly "org.springframework.boot:spring-boot-starter-web:$SPRINGBOOT_VERSION"
+    implementation 'redis.clients:jedis:+'
+    implementation "org.springframework.data:spring-data-redis:+"
+    implementation 'com.auth0:java-com.tyytogether.jwt:3.10.3'
+    implementation "org.springframework.cloud:spring-cloud-starter-gateway:+"
+    implementation 'com.google.code.gson:gson:2.+'
+}
