@@ -1,0 +1,20 @@
+spring:
+#  cloud:
+#    nacos:
+#      discovery:
+#        registerEnabled: false
+#        server-addr: 172.25.7.226:8848
+#
+#  redis:
+#    host: ${REDIS_ADDR:redis.sylas.jinuo.fun}
+#    database: 1
+#    port: ${REDIS_PORT:21202}
+#    timeout: 200000
+#    password: ${REDIS_PASSWORD:}
+
+easy.auth:
+  jwt:
+    secret: sylas2020
+    issuer: sylas.org
+    headerTokenKey: token
+    expire: 604800

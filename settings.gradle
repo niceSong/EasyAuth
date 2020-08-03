@@ -1,4 +1,5 @@
 rootProject.name = 'EasyAuth'
-include 'authentication'
-include 'certification'
-include 'easy-auth-sample'
+include 'easy-auth-authentication'
+include 'easy-auth-certification'
+include 'easy-auth-web-sample'
+include 'easy-auth-gateway-sample'
