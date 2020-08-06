@@ -1,10 +1,10 @@
 spring:
-#  cloud:
-#    nacos:
-#      discovery:
-#        registerEnabled: false
-#        server-addr: 172.25.7.226:8848
-#
+  cloud:
+    nacos:
+      discovery:
+        registerEnabled: false
+        server-addr: 172.25.7.226:8848
+
   redis:
     host: ${REDIS_ADDR:redis.sylas.jinuo.fun}
     database: 1
@@ -16,4 +16,5 @@ easy.auth:
   jwt:
     secret: auth2020
     issuer: auth.org
+    headerTokenKey: token
     expire: 604800

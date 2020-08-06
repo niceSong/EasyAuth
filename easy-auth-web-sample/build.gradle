@@ -3,7 +3,7 @@ plugins {
 }
 
 apply plugin: 'org.springframework.boot'
-group 'org.tyytogether.auth'
+group 'org.tyytogether'
 version '1.0.0-SNAPSHOT'
 
 sourceCompatibility = 1.8

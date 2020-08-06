@@ -19,7 +19,7 @@ class RoleRegistrar : ImportBeanDefinitionRegistrar {
         roleProvider.findCandidateComponents(eventPackage).forEach { beanDefinition ->
             val clazz = Class.forName(beanDefinition.beanClassName).kotlin
             val annotation = clazz.annotations.filter { it.annotationClass ==  EasyAuthRole::class }.first() as EasyAuthRole
-            RoleMap.map[clazz.simpleName!!] = annotation.permissions.toMutableList()
+            RoleMap.map[clazz.simpleName!!.toLowerCase()] = annotation.permissions.toMutableList()
         }
     }
 }

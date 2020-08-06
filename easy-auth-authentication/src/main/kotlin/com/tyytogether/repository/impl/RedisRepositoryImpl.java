@@ -13,8 +13,9 @@ public class RedisRepositoryImpl implements RedisRepository {
     private RedisTemplate<String, String> redisTemplate;
 
     @Override
-    public String get(String key){
-        return redisTemplate.opsForValue().get(assembleRedisKey(key));
+    public void set(String key, String value, Long expire, TimeUnit timeUnit) {
+        String newKey = this.assembleRedisKey(key);
+        redisTemplate.opsForValue().set(newKey, value, expire, timeUnit);
     }
 
     private String assembleRedisKey(String primaryKey) {

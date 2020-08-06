@@ -1,4 +1,4 @@
-package com.tyytogether.role;
+package com.sample.role;
 
 import com.tyytogether.annotation.EasyAuthRole;
 

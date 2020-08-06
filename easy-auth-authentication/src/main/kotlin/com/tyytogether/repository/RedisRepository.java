@@ -4,6 +4,6 @@ import java.util.concurrent.TimeUnit;
 
 public interface RedisRepository {
 
-    String get(String key);
+    void set(String key, String value, Long expire, TimeUnit timeUnit);
 
 }

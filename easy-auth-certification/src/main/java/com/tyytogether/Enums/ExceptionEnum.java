@@ -2,8 +2,8 @@ package com.tyytogether.Enums;
 
 public enum ExceptionEnum {
     // header 手动注入异常
-    HEADER_MANUAL_INJECT_EX(10000, "警告！Header被注入登陆信息"),
-    NO_TOKEN_KEY(10001, "警告！Header缺少配置文件中${header-token-key}对应key");
+    HEADER_MANUAL_INJECT_EX(10000, "Warning!! Header has bean inject user login info"),
+    NO_TOKEN_KEY(10001, "Warning!! Not find configuration key in header");
 
     private Integer code;
     private String msg;

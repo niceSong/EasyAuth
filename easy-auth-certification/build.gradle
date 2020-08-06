@@ -3,8 +3,9 @@ plugins {
 }
 
 apply plugin: 'java'
+apply plugin: 'maven'
 
-group 'org.tyytogether.auth'
+group 'org.tyytogether'
 version '1.0.0-SNAPSHOT'
 
 sourceCompatibility = 1.8
@@ -17,9 +18,10 @@ repositories {
 
 dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.12'
-    compileOnly "org.springframework.boot:spring-boot-starter-web:$SPRINGBOOT_VERSION"
-    implementation 'redis.clients:jedis:+'
-    implementation "org.springframework.data:spring-data-redis:+"
+    // redis
+    implementation 'redis.clients:jedis:3.3.0'
+    implementation "org.springframework.data:spring-data-redis:2.3.2.RELEASE"
+    //jwt
     compile 'com.auth0:java-jwt:3.8.1'
     implementation "org.springframework.cloud:spring-cloud-starter-gateway:+"
     implementation 'com.google.code.gson:gson:2.+'

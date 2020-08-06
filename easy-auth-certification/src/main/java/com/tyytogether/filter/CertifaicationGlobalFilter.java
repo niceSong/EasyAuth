@@ -1,14 +1,19 @@
 package com.tyytogether.filter;
 
+import com.google.gson.Gson;
 import com.tyytogether.Enums.ExceptionEnum;
 import com.tyytogether.Enums.HeaderEnum;
 import com.tyytogether.exception.EasyAuthException;
 import com.tyytogether.jwt.EasyAuthJwtTools;
+import com.tyytogether.user.UserBase;
+import io.netty.util.internal.StringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
 import org.springframework.cloud.gateway.filter.GlobalFilter;
+import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.server.reactive.ServerHttpRequest;
+import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 import org.springframework.web.server.ServerWebExchange;
 import com.tyytogether.properties.CertificationProperties;
@@ -32,6 +37,8 @@ public class CertifaicationGlobalFilter implements GlobalFilter {
     @Autowired
     private RedisRepository redisRepository;
 
+    Gson gson = new Gson();
+
     @Override
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
         ServerHttpRequest request = exchange.getRequest();
@@ -43,30 +50,38 @@ public class CertifaicationGlobalFilter implements GlobalFilter {
             throw new EasyAuthException(ExceptionEnum.HEADER_MANUAL_INJECT_EX);
         }
 
+        String token;
         // 判断并处理token
-        String token = headers.get(certificationProperties.getHeaderTokenKey()).get(0);
-        if(StringUtils.isEmpty(token)){
+        try {
+            token = headers.get(certificationProperties.getHeaderTokenKey()).get(0);
+        }catch (Exception e){
             throw new EasyAuthException(ExceptionEnum.NO_TOKEN_KEY);
-        }else {
-            String tokenInfo = easyAuthJwtTools.parseToken(token);
-            // 判断 tokenInfo 是否在redis中。因为token有超时时间。
-            // 如果没找到token或者token不相等，都直接放行，网关不进行认证处理，在authentication中进行认证。
-            String tokenInRedis = redisRepository.get(tokenInfo);
-            if(tokenInRedis == null || tokenInRedis != token){
-                return chain.filter(exchange);
-            }
-
-            ServerHttpRequest newRequest = exchange.getRequest()
-                    .mutate()
-                    .header(HeaderEnum.INNER_HEADER_TOKEN.getInfo(), tokenInfo)
-                    .build();
-            ServerWebExchange newExchange = exchange
-                    .mutate()
-                    .request(newRequest)
-                    .response(exchange.getResponse())
-                    .build();
-
-            return chain.filter(newExchange);
         }
+
+        String tokenInfo;
+        try {
+            tokenInfo = easyAuthJwtTools.parseToken(token);
+        }catch (Exception e){
+            return chain.filter(exchange);
+        }
+        UserBase userBase = gson.fromJson(tokenInfo, UserBase.class);
+        // 判断 tokenInfo 是否在redis中。
+        // 如果没找到token或者token不相等，都直接放行，因为网关不进行认证，认证在authentication中进行。
+        String tokenInRedis = redisRepository.get(userBase.getId());
+        if(tokenInRedis == null || !tokenInRedis.equals(token) ){
+            return chain.filter(exchange);
+        }
+
+        ServerHttpRequest newRequest = exchange.getRequest()
+                .mutate()
+                .header(HeaderEnum.INNER_HEADER_TOKEN.getInfo(), tokenInfo)
+                .build();
+        ServerWebExchange newExchange = exchange
+                .mutate()
+                .request(newRequest)
+                .response(exchange.getResponse())
+                .build();
+
+        return chain.filter(newExchange);
     }
 }

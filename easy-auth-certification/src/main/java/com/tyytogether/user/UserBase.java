@@ -1,4 +1,4 @@
-package com.tyytogether.base;
+package com.tyytogether.user;
 
 public class UserBase {
     String id;

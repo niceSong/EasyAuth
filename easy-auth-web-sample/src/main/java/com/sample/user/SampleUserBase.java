@@ -1,6 +1,8 @@
-package com.tyytogether.base;
+package com.sample.user;
 
-public class SampleUserBase extends UserBase{
+import com.tyytogether.user.UserBase;
+
+public class SampleUserBase extends UserBase {
     String someInfo;
 
     public SampleUserBase(String someInfo, String id, String role){

@@ -1,9 +1,5 @@
 buildscript {
 
-    ext{
-        publish_version = '1.2.2'
-        publish_group = 'me.jinuo.imf'
-    }
     repositories {
         maven { url "https://maven.aliyun.com/repository/central" }
         maven { url "https://maven.aliyun.com/repository/jcenter" }
@@ -20,7 +16,7 @@ buildscript {
 }
 
 
-group 'org.tyytogether.auth'
+group 'org.tyytogether'
 version '1.0-SNAPSHOT'
 
 repositories {
@@ -29,61 +25,4 @@ repositories {
     maven { url "https://maven.aliyun.com/repository/spring" }
 }
 
-task uploadAll() {
-    group = 'upload'
-}
-
-//subprojects { subProject ->
-//
-//    tasks.withType(JavaCompile) {
-//        options.encoding = "UTF-8"
-//    }
-//
-//    group publish_group
-//    version publish_version
-//
-//
-//    def subjectName = subProject.name
-//
-//    if (subjectName == 'armor-authentication-sample') {
-//        return
-//    }
-//
-//    def pomArtifactId = ''
-//    def pomName = ''
-//    def pomDescription = ''
-//    if (subjectName == 'armor-annotation') {
-//        pomArtifactId = 'armor-annotation'
-//        pomName = 'armor-annotation'
-//        pomDescription = "armor的注解"
-//    } else if (subjectName == 'armor-authentication') {
-//        pomArtifactId = 'armor-authentication-spring-boot-starter'
-//        pomName = 'armor-authentication'
-//        pomDescription = "armor认证相关"
-//    } else if (subjectName == 'armor-authorization') {
-//        pomArtifactId = 'armor-authorization-spring-boot-starter'
-//        pomName = 'armor-authorization-spring-boot-starter'
-//        pomDescription = "armor授权相关"
-//    }
-//
-//    mavenPublish {
-//        group = publish_group //选填 默认为项目group
-//        version = publish_version//选填 默认为项目version
-//        artifactId = pomArtifactId //选填 默认为项目名
-//        name = pomName //选填
-//        description = pomDescription //选填
-//        developerId = "imf" //选填
-//        developerName = "Jude95" //选填
-//
-//        targets {
-//            uploadArchives {
-//                signing = false //选填
-//            }
-//        }
-//    }
-//
-//
-//    subProject.afterEvaluate {
-//        uploadAll.dependsOn subProject.uploadArchives
-//    }
-//}
+apply from : "push.gradle"

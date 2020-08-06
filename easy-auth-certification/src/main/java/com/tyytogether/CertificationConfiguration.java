@@ -1,14 +1,12 @@
-package com.tyytogether.configuretion;
+package com.tyytogether;
 
 import com.tyytogether.filter.CertifaicationGlobalFilter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.core.annotation.Order;
 
 @Configuration
 @ComponentScan
-@Order(1)
 public class CertificationConfiguration {
 
     @Bean
