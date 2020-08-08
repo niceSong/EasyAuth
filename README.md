@@ -1,9 +1,9 @@
 # Easy-Auth
-简单方便的认证、鉴权框架。 目前仅支持SpringCloud分布式服务中使用。 
+简单方便的认证、鉴权框架。 目前仅支持在SpringCloud分布式服务中使用。 
+
 ## 使用手册
 ### 网关模块
-在网关，框架会对token解析，并将解析信息放入header。
-在网关，框架没有进行认证，非法的token框架也会放行，因为认证应该在接口内进行，由接口自己决定是否需要认证。
+网关模块只需添加依赖和配置。框架会对token解析并放入header。
 #### 依赖
 ```groovy
 repositories {
@@ -11,7 +11,7 @@ repositories {
 }
 
 dependencies{
-    implementation 'org.tyytogether:easy-auth-certification:1.0.0-SNAPSHOT'
+    implementation 'com.github.niceSong.EasyAuth:easy-auth-certification:v1.0.0'
 }
 ```
 #### 配置
@@ -31,7 +31,9 @@ easy.auth:
     headerTokenKey: token
     expire: 604800
 ```
+
 ### 认证/鉴权模块
+核心模块：定义角色权限、认证鉴权。
 #### 依赖：
 ```groovy
 repositories {
@@ -39,7 +41,7 @@ repositories {
 }
 
 dependencies{
-    implementation 'org.tyytogether:easy-auth-authentication:1.0.0-SNAPSHOT'
+    implementation 'com.github.niceSong.EasyAuth:easy-auth-authentication:v1.0.0'
 }
 ```
 #### 配置
@@ -50,8 +52,8 @@ easy.auth:
     issuer: auth.org
     expire: 604800
 ```
-### 代码
-* 添加框架扫描注解
+#### 添加注解
+* 添加`@EasyAuthRoleScan`注解
 ```java
 @SpringBootApplication
 @EasyAuthRoleScan
@@ -61,22 +63,21 @@ public class WebApplication {
     }
 }
 ```
-* 定义角色及角色对应权限，比如：
-定义`admin`角色，其含有“更改用户余额”、“查看网站统计”两个权限
+#### 定义角色及权限
 ```java
+// 定义角色：`admin`，它拥有两个权限：“更改用户余额”、“查看网站统计”
 @EasyAuthRole(permissions = {"changeUserBalance","viewWebStatistics"})
 public class Admin {
 }
 ```
-* 认证、鉴权
-下面代码中，`auth()`接口传入的参数：
-* 该接口允许的权限。
-* request。
-* 用户自定义的操作（比如对token中的某些信息进行存储），传入lambda即可。
+#### 认证、鉴权
+在需要认证或鉴权的请求接口中调用`auth()`接口。其传入的参数如下：
+1. 该接口允许的权限。
+2. request。
+3. 用户自定义的操作，传入lambda即可，没有传入null。
 ```java
 @Autowired
 private EasyAuth easyAuth;
-
 @Autowired
 private HttpServletRequest request;
 
@@ -85,8 +86,8 @@ public void sample(){
     System.out.println("认证/鉴权，成功");
 }
 ```
-* 生成token
-下面代码中，`UserBase`为框架的数据结构，`generateToken()`接口需传入`UserBase`的子类，可以自定义更多的信息存入token中。
+#### 生成token
+下面代码中，`UserBase`为框架自带数据结构。
 ```java
 @Autowired
 private EasyAuthJwtTools easyAuthJwtTools;
@@ -96,7 +97,8 @@ public String loginSample(){
     return easyAuthJwtTools.generateToken(user,1L, TimeUnit.HOURS);
 }
 ```
+
 ## 示例
-示例详见以下模块：
+示例详见模块：
 * `easy-auth-gateway-sample` 
 * `easy-auth-web-sample`
