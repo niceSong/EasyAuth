@@ -32,7 +32,7 @@ easy.auth:
     expire: 604800
 ```
 
-### 认证/鉴权模块
+### 认证/鉴权
 核心模块：定义角色权限、认证鉴权。
 #### 依赖：
 ```groovy
@@ -70,7 +70,7 @@ public class WebApplication {
 public class Admin {
 }
 ```
-#### 认证、鉴权
+#### 认证/鉴权
 在需要认证或鉴权的请求接口中调用`auth()`接口。其传入的参数如下：
 1. 该接口允许的权限。
 2. request。
