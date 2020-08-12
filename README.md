@@ -11,7 +11,7 @@ repositories {
 }
 
 dependencies{
-    implementation 'com.github.niceSong.EasyAuth:easy-auth-certification:v1.0.0'
+    implementation 'com.github.niceSong.EasyAuth:easy-auth-certification:v1.0.1'
 }
 ```
 #### 配置
@@ -41,7 +41,7 @@ repositories {
 }
 
 dependencies{
-    implementation 'com.github.niceSong.EasyAuth:easy-auth-authentication:v1.0.0'
+    implementation 'com.github.niceSong.EasyAuth:easy-auth-authentication:v1.0.1'
 }
 ```
 #### 配置
@@ -78,11 +78,9 @@ public class Admin {
 ```java
 @Autowired
 private EasyAuth easyAuth;
-@Autowired
-private HttpServletRequest request;
 
 public void sample(){
-    easyAuth.auth("changeUserBalance", request, null);
+    easyAuth.auth("changeUserBalance", null);
     System.out.println("认证/鉴权，成功");
 }
 ```
