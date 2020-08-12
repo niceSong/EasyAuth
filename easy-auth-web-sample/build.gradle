@@ -17,7 +17,7 @@ repositories {
 
 dependencies {
 //    implementation project(':easy-auth-authentication')
-    implementation 'com.github.niceSong.EasyAuth:easy-auth-authentication:v1.0.0'
+    implementation 'com.github.niceSong.EasyAuth:easy-auth-authentication:v1.0.1'
     implementation "org.springframework.boot:spring-boot-starter-web:$SPRINGBOOT_VERSION"
     implementation "org.springframework.boot:spring-boot-starter:$SPRINGBOOT_VERSION"
     testCompile group: 'junit', name: 'junit', version: '4.12'

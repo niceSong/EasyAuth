@@ -15,9 +15,6 @@ import java.util.concurrent.TimeUnit;
 public class SampleController {
 
     @Autowired
-    private HttpServletRequest request;
-
-    @Autowired
     private EasyAuthJwtTools easyAuthJwtTools;
 
     @Autowired
@@ -25,7 +22,7 @@ public class SampleController {
 
     @GetMapping("/sample/auth")
     public void sample(){
-        easyAuth.auth("changeUserAmount", request, null);
+        easyAuth.auth("changeUserAmount", null);
         System.out.println("认证/鉴权，成功");
     }
 

@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.tyytogether.user.UserBase;
 import com.tyytogether.driver.RoleMap;
 import com.tyytogether.functional.DiyFilter;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletRequest;
@@ -12,7 +13,10 @@ import javax.servlet.http.HttpServletRequest;
 public class EasyAuth{
     Gson gson = new Gson();
 
-    public void auth(String needPermission, HttpServletRequest request, DiyFilter diyFilter) {
+    @Autowired
+    private HttpServletRequest request;
+
+    public void auth(String needPermission, DiyFilter diyFilter) {
         /**
          * 框架处理内容
         * */
