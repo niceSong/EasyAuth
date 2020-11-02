@@ -1,5 +1,6 @@
 package com.sample.controller;
 
+import com.sample.Service.TestService;
 import com.tyytogether.api.EasyAuth;
 import com.sample.user.SampleUserBase;
 import com.tyytogether.tools.EasyAuthJwtTools;
@@ -20,9 +21,14 @@ public class SampleController {
     @Autowired
     private EasyAuth easyAuth;
 
+    @Autowired
+    private TestService testService;
+
     @GetMapping("/sample/auth")
     public void sample(){
-        easyAuth.auth("changeUserAmount", null);
+        easyAuth.auth("changeUserAmount", ()->{
+            testService.test();
+        });
         System.out.println("认证/鉴权，成功");
     }
 

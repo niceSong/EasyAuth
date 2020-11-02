@@ -21,8 +21,10 @@ public class EasyJWT {
 
     public String sign(String payload, long expire) {
         return JWT.create().withClaim(KEY_PAYLOAD, payload)
-                .withIssuer(this.certificationProperties.getIssuer()).withIssuedAt(Date.from(Instant.now()))
-                .withExpiresAt(Date.from(Instant.now().plus(expire, ChronoUnit.SECONDS))).sign(Algorithm.HMAC256(certificationProperties.getSecret()));
+                .withIssuer(this.certificationProperties.getIssuer())
+                .withIssuedAt(Date.from(Instant.now()))
+                .withExpiresAt(Date.from(Instant.now().plus(expire, ChronoUnit.SECONDS)))
+                .sign(Algorithm.HMAC256(certificationProperties.getSecret()));
     }
 
     public String sign(String payload) {
